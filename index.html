@@ -83,6 +83,7 @@ input,select{font:inherit;border:1px solid var(--line);border-radius:12px;paddin
 var CFG={
   family:'Anthony Family',
   calendarApi:'https://family-cal.maegen-anthony.workers.dev',
+    colors:{'Maegen':'#d6538c','Mark':'#e07b00','Maddox':'#1a8a8a','McGuire':'#3b6ea5','Madelynn':'#8a4f7d','Everyone':'#c0392b'},
   people:['Maegen','Mark','Maddox','McGuire'],
   stores:['Groceries',"Sam's Club",'Walmart','Aldi','Other','Household'],
   routines:['Morning','Bedtime']
@@ -186,7 +187,7 @@ function loadCal(){
       var day=ev.filter(function(x){return x.s<b&&(x.e>a||x.s>=a)}).sort(function(p,q){return (q.ad?1:0)-(p.ad?1:0)||p.s-q.s});
       if(!day.length)continue;
       html+='<h4>'+(i===0?'Today':i===1?'Tomorrow':a.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}))+'</h4><ul>'+
-      day.map(function(x){return '<li><i class="dot" style="background:'+CC[x.c%CC.length]+'"></i><b class="tm">'+(x.ad?'All day':x.s.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}))+'</b><span>'+esc(x.t)+'</span>'+(cals.length>1?'<em class="tag">'+esc(x.n)+'</em>':'')+'</li>'}).join('')+'</ul>';
+      day.map(function(x){return '<li><i class="dot" style="background:'+(CFG.colors[x.n]||'#9aa09c')+'"></i><b class="tm">'+(x.ad?'All day':x.s.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}))+'</b><span>'+esc(x.t)+'</span>'+(cals.length>1?'<em class="tag">'+esc(x.n)+'</em>':'')+'</li>'}).join('')+'</ul>';
     }
     box.innerHTML=(html||'<p class="empty">Nothing scheduled in the next 7 days.</p>')+'<p class="note">Updated '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})+'</p>';
   }).catch(function(){box.innerHTML='<p class="empty">Couldn\'t load the calendar. Check the Worker address and your internet connection.</p>'});
